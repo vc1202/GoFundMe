@@ -78,7 +78,7 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="userid" class="form-control" type="text" placeholder="Enter username" />
+                <input  name="userid" class="form-control" type="text" placeholder="Enter username" />
                  
             </div>
         </fieldset>
@@ -102,7 +102,7 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input class="btn btn-success btn-block" name="submitSignUp" class="form-control" type="submit" value="Register">
+                <input class="btn btn-success btn-block" name="submitSignUp" class="form-control" type="submit" value="Register" onclick="CheckStatus()" >
                  
             </div>
         </fieldset>
@@ -115,6 +115,21 @@
 </div>
 
 <script>
+    
+    function checkStatus()
+    {
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 400) {
+      alert("Username is already Taken");
+    }
+  };
+        xhttp.open("POST", "Signup.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var param= "username"+"="+document.getElementbyName("userid").value+"password"+"="+document.getElementbyName("password").value+"FirstName"+"="+document.getElementbyName("fname").value+"LastName"+"="+document.getElementbyName("lname").value;
+        xhttp.send(param);
+        
+        }
   
 </script>
 
