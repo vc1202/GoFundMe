@@ -3,8 +3,8 @@ session_start();
 error_reporting(0);
 $servername = "localhost";
 $usernam = "root";
-$password = "yolo";
-$dbname = "kickfarted";
+$password = "";
+$dbname = "project";
 $httpStatusCode = 400;
 $httpStatusMsg  = 'Username Already taken';
 $protocol=isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
@@ -29,28 +29,30 @@ else
 {
     
     $pass=mysql_real_escape_string($_POST['password']);
-    $password = password_hash($pass,PASSWORD_DEFAULT);
+    $password1 = password_hash($pass,PASSWORD_BCRYPT);
     $firstName=mysql_real_escape_string($_POST['FirstName']);
     $LastName=mysql_real_escape_string($_POST['LastName']);
     
+    $sql = "INSERT INTO User (user_id, f_name, l_name,password,address,dob) VALUES ('$username1', '$firstName', '$LastName','$password1','123',CURDATE())";
     
-    $sql = "INSERT INTO Users(Username, FirstName, LastName,Password)
-    VALUES ($usermame,$firstName,$LastName ,$password)";
     if ($connection->query($sql) === TRUE) {
+        $Success=505;
+        $httpStatusMsg='Added';
+        $_SESSION['username']=$username1;
+        header($protocol.' '.$Success.' '.$httpStatusMsg);
         
         
-    
-} 
+ } 
 
-else {
+    else {
     
 
-    
-    
-    
-}
+    $Success=404;
+    $httpStatusMsg='Some error While Inserting the records'; 
+    header($protocol.' '.$Success.' '.$httpStatusMsg);
+    }
 
-$conn->close();
+$connection->close();
 
  }
  
