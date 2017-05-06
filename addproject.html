@@ -15,7 +15,7 @@
 <body>
 
 <div class="container">
-            <a class="brand" style="display: flex; justify-content: center; margin-top:10px;" href="#">
+            <a class="brand" style="display: flex; justify-content: center; margin-top:10px;" href="index.html">
                 <img src="images/1_Primary_logo_on_transparent_377x63.png" style="height:30px;">
             </a>
 </div> <!--container-->
@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse" id="getFundedNavMenu">
 
             <div class="nav navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="#">Home</a>
+                <a class="nav-item nav-link active" href="index.html">Home</a>
                 <a class="nav-item nav-link" href="#">Explore</a>
             </div> <!-- navbar -->  
             
@@ -65,8 +65,77 @@
         
     </nav>
 
-<div class="container">
-    
+<div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:60%; background-color:aqua;">
+    <form name="addproject" action="#" onsubmit="#" method="POST"> 
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <legend>View previous projects? <a href="projectlist.html">Past projects</a></legend>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input name="project_title" class="form-control" type="text" placeholder="Project Title"/>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label class="form-group" for="description">Project description: </label><br>
+                <textarea rows="4" cols="50" name="description" form="addproject">
+                </textarea>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input name="minamt" class="form-control" min=10 type="number" placeholder="minimum amount"/>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">$</span>
+                <input name="maxamt" class="form-control" min=10 type="number" placeholder="maximum amount"/>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label class="form-group" for="enddate"> Pledge end date: </label>
+                <input name="enddate" class="form-control" type="datetime-local" placeholder="End of pledge"/>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label class="form-group" for="projcompletion"> Pledge completion: </label>
+                <input name="projcompletion" class="form-control" type="datetime-local" placeholder="project completion"/>
+                 
+            </div>
+        </fieldset>
+
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input class="btn btn-success btn-block" name="createproject" class="form-control" type="submit" value="Create Project">
+                 
+            </div>
+        </fieldset>
+                  
+                   
+                   
+
+
+    </form>
 </div>
 
 
