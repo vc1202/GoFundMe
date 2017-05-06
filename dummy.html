@@ -10,44 +10,11 @@
 </head>
 
 <body>
-    <script>
-        function user()
-    {   
-        var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function() {
-    if (this.readyState === 4) {
-        if(this.status===400){
-        alert("Incorrect User name or Password");
-    }
-        if(this.status===200)
-        {
-            
-            alert("Login Successful");
-            window.location.replace("user-wall.php");
 
-            
-        }
-        
-            
-            }
-  };    
-        xhttp.open("POST", "login.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var param= "username"+"="+document.getElementById("userid").value+"&"+"password"+"="+document.getElementById("password").value;
-        xhttp.send(param);
-        
-        } 
-        
-      
-    
-    
-    
-    
-    
-    </script>
+
 
 <div class="container">
-            <a class="brand" style="display: flex; justify-content: center; margin-top:10px;" href="index.html">
+            <a class="brand" style="display: flex; justify-content:center; margin-top:10px;" href="index.html">
                 <img src="images/1_Primary_logo_on_transparent_377x63.png" style="height:30px;">
             </a>
 </div> <!--container-->
@@ -78,27 +45,34 @@
                             <img src="images/698956-icon-111-search-128.png" style="width:16px">
                         </button>
                 </form>
-                <a class= "nav-item nav-link active" href="#">Log in</a>
-                <a class="nav-item nav-link" href="signup.html">Sign Up</a> 
+                <a class= "nav-item nav-link" href="login.html">Log in</a>
+                <a class="nav-item nav-link active" href="#">Sign Up</a> 
             </div>
         </div> <!-- collapse -->
 
     </nav>
 </div> <!-- content container --> 
 
-<div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:400px; background-color:ghostwhite;">
-    <form name="login"> 
+<div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:400px; background-color:aqua;">
+    <form   method="post" action="Signup.php"> 
 
         <fieldset class="form-group">
             <div class="form-group">
-                <legend>Need to Sign-up? <a href="signup.html">Sign-up</a></legend>
+                <legend>Already Signed-up? <a href="login.html">login</a></legend>
                  
             </div>
         </fieldset>
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input id="userid" name="userid" class="form-control" type="text" placeholder="Enter username" required/>
+                <input id="firstname" name="firstname" class="form-control" type="text" placeholder="First name"/>
+                 
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input id="lastname" name="lastname" class="form-control" type="text" placeholder="Last name"/>
                  
             </div>
         </fieldset>
@@ -106,7 +80,16 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input id="password" name="password" class="form-control" type="password" placeholder="Password" required/>
+                <input  id="userid" name="userid" class="form-control" type="text" placeholder="Enter username" />
+                 
+            </div>
+        </fieldset>
+
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input id="password" name="password" class="form-control" type="password" placeholder="Password" />
+                <small class="form-text text-muted" id="passwordHelp">Password must contain small & capital alphabets with number(s) </small>
             </div>
 
         </fieldset>
@@ -114,13 +97,22 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input class="btn btn-success btn-block" name="submitSignUp" class="form-control" type="button" value="Login" onclick="user()">
+                <input id="confirmPassword" name="confirmPassword" class="form-control" type="password" placeholder="Confirm password" />
+                <small class="form-text text-muted" id="confirmPasswordHelp">Password must match </small>
+            </div>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input class="btn btn-success btn-block" name="submitSignUp" type="submit" value="Register">
                  
             </div>
-        </fieldset>               
+        </fieldset>
 
     </form>
 </div>
+
+
 
 <script src="js/jquery.slim.min.js"></script>
 <script src="js/tether.min.js"></script>

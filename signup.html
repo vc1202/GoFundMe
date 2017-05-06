@@ -10,6 +10,48 @@
 </head>
 
 <body>
+ 
+<script src="js/jquery.slim.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/scripts.js"></script>
+ <script>
+    
+    function check()
+    {   
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+    if (this.readyState === 4) {
+        if(this.status===400){
+        alert("Username is Already Taken try with other username");
+    }
+        if(this.status===505)
+        {
+            
+            alert("Registered Succesfully");
+            window.location.replace("user-wall.php");
+
+            
+        }
+        if(this.status===404)
+        {
+            
+            alert("Some error while inserting the tuples");
+   
+            
+        }
+            
+            }
+  };    
+        xhttp.open("POST", "Signup.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var param= "username"+"="+document.getElementById("username").value+"&"+"password"+"="+document.getElementById("password").value+"&"+"FirstName"+"="+document.getElementById("fname").value+"&"+"LastName"+"="+document.getElementById("lname").value;
+        xhttp.send(param);
+        
+        } 
+  
+</script>
+
 
 <div class="container">
             <a class="brand" style="display: flex; justify-content:center; margin-top:10px;" href="index.html">
@@ -52,7 +94,7 @@
 </div> <!-- content container --> 
 
 <div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:400px; background-color:aqua;">
-    <form name="signup" action="#" onsubmit="return FormValidator()" method="POST"> 
+    <form name="signup"> 
 
         <fieldset class="form-group">
             <div class="form-group">
@@ -63,22 +105,14 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="fname" class="form-control" type="text" placeholder="First name"/>
+                <input id ="fname" name="fname" class="form-control" type="text" placeholder="First name"/>
                  
             </div>
         </fieldset>
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="lname" class="form-control" type="text" placeholder="Last name"/>
-                 
-            </div>
-        </fieldset>
-
-
-        <fieldset class="form-group">
-            <div class="form-group">
-                <input name="userid" class="form-control" type="text" placeholder="Enter username" />
+                <input id="lname" name="lname" class="form-control" type="text" placeholder="Last name"/>
                  
             </div>
         </fieldset>
@@ -86,7 +120,15 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="password" class="form-control" type="password" placeholder="Password" />
+                <input   id="username" name="username" class="form-control" type="text" placeholder="Enter username" />
+                 
+            </div>
+        </fieldset>
+
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <input id="password" name="password" class="form-control" type="password" placeholder="Password" />
                 <small class="form-text text-muted" id="passwordHelp">Password must contain small & capital alphabets with number(s) </small>
             </div>
 
@@ -95,14 +137,14 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="confirmPassword" class="form-control" type="password" placeholder="Confirm password" />
+                <input id="ConfirmPassword" name="confirmPassword" class="form-control" type="password" placeholder="Confirm password" />
                 <small class="form-text text-muted" id="confirmPasswordHelp">Password must match </small>
             </div>
         </fieldset>
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input class="btn btn-success btn-block" name="submitSignUp" class="form-control" type="submit" value="Register">
+                <input id="Button1" class="btn btn-success btn-block" type="button" name="submitSignUp" class="form-control" value="Register" onclick="check()">
                  
             </div>
         </fieldset>
@@ -113,15 +155,5 @@
 
     </form>
 </div>
-
-<script>
-  
-</script>
-
-
-<script src="js/jquery.slim.min.js"></script>
-<script src="js/tether.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/scripts.js"></script>
 </body>
 </html>
