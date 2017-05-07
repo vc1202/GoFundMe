@@ -253,7 +253,7 @@ $resultcomment=$connection->query($sqlcomment);
         </div> <!-- col-8 -->
 
         <div class="col-3 form-group">
-            <h3>By User: <?php echo $row['owner_id'] ;?> </h3><hr>
+            <h3>By User: <a href="view_profile.php?id=<?php echo $row['owner_id']?>"><?php echo $row['owner_id'] ;?> </a></h3><hr>
             <p><?php echo $row['amt_collected'] ."  "."pledged out of"."  ";?><?php echo $row['max_amt'];?></p>
             
             <p> <?php echo $row1['counter']." "."Backers for this project";?></p>

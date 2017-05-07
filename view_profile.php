@@ -1,3 +1,7 @@
+<?php
+session_start();
+  $username=mysql_real_escape_string($_SESSION['username']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,117 @@
   <title>GetFunded</title>
 
 </head>
+<?php
+function connect()
+{
+    
+     $servername = "localhost";
+     $usernam = "root";
+     $password = "";
+     $dbname = "project";
+     $connection = new mysqli($servername,$usernam,$password,$dbname);
+     //Check if the connection is established
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+} 
 
+return $connection;
+    }
+
+    $connection=connect();
+    $userid=mysql_real_escape_string($_GET['id']);
+    
+    $sql="Select project_id,status,p_title from project WHERE owner_id='$userid'";
+    
+    $result=$connection->query($sql);
+    
+    
+    ?>
+?>
+
+<script>
+    
+    function followuser()
+    {   
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+    if (this.readyState ===4) {
+        if(this.status===400){
+        alert("Some Error Occured While Following");
+    }
+        if(this.status==200)
+        {
+            
+            alert("User Followed Sucessfully");
+            
+
+            
+        }
+        if(this.status===404)
+        {
+            alert("You Already Follow this User");
+            
+        }
+        
+            
+            }
+  };    
+        xhttp.open("POST", "social.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //var param= "username"+"="+document.getElementById("username").value+"&"+"password"+"="+document.getElementById("password").value+"&"+"FirstName"+"="+document.getElementById("fname").value+"&"+"LastName"+"="+document.getElementById("lname").value;
+        var param="followerid"+"="+ <?php echo json_encode($username)?>+"&"+"followedid"+ "="+<?php echo json_encode($userid)?>;
+        xhttp.send(param);
+        
+        } 
+     
+    
+     
+ 
+    
+  function unfollow()
+  {
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+    if (this.readyState ===4) {
+        if(this.status===400){
+        alert("Some Error Occured While UnFollowing");
+    }
+        if(this.status==200)
+        {
+            
+            alert("User UnFollowed Sucessfully");
+            
+
+            
+        }
+     
+        
+            
+            }
+  };    
+        xhttp.open("POST", "social.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //var param= "username"+"="+document.getElementById("username").value+"&"+"password"+"="+document.getElementById("password").value+"&"+"FirstName"+"="+document.getElementById("fname").value+"&"+"LastName"+"="+document.getElementById("lname").value;
+        var param="followerid"+"="+ <?php echo json_encode($username)?>+"&"+"deleteuser"+ "="+<?php echo json_encode($userid)?>;
+        xhttp.send(param);
+        
+        } 
+      
+      
+      
+      
+      
+      
+      
+  
+        
+        
+        
+        
+    
+    
+    
+</script>
 <body>
 
 <div class="container">
@@ -70,15 +184,37 @@
     <br>
     <div class="row">
         <div class="col-2">
-            <h3>User name</h3>
-            <button class="btn-info">Follow</button><br><br>
-            <button class="btn-info">Un-follow</button><br>
+            <h3>User name:    </h3> <?php echo $userid ?>  
+            <button class="btn-info" onclick="followuser()">Follow</button><br><br> 
+            <button class="btn-info" onclick="unfollow()">Un-follow</button><br>
         </div>
 
         <div class="col-8">
             <div class="row">
                 <div class="col">
-                    <h4>Projects by this user:</h4>
+                    <h4>Projects by this <?php echo $userid?> :</h4>
+                    <table class="table">
+                        <tr>
+                            <td>Project Id</td>
+                            <td>Project Name</td>
+                            <td>Project Status</td>
+                        </tr>  
+                        
+                   <?php     
+                    while($row=$result->fetch_assoc())
+                    { ?>
+                        <tr>
+                            <td> <a href="view_project.php?id=<?php echo $row['project_id']?>"> <?php echo $row['project_id']?></a></td>
+                        <td><?php echo $row['p_title']?></td>
+                        <td><?php echo $row['status']?></td>
+                        </tr>
+                        
+                    <?php }?>
+                        
+                    </table>
+                    
+                    
+                    
                     <h6><a href="#">Project# backed</a></h6>
                 </div>
             </div>

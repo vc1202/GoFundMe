@@ -20,8 +20,8 @@ $httpStatusCode = 400;
 $httpStatusMsg  = 'Incorrect Username or Password';
 $protocol=isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
 
-$connection = new mysqli($servername,$usernam,$password,$dbname);
-if ($connection->connect_error) {
+$connection=new mysqli($servername,$usernam,$password,$dbname);
+if (!$connection) {
     die("Connection failed: " . $connection->connect_error);
 } 
 

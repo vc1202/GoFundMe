@@ -1,3 +1,6 @@
+<?php
+session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +16,37 @@
 </head>
 
 <body>
+    
+<?php
+function connect()
+{
+    
+     $servername = "localhost";
+     $usernam = "root";
+     $password = "";
+     $dbname = "project";
+     $connection = new mysqli($servername,$usernam,$password,$dbname);
+     //Check if the connection is established
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+} 
+
+return $connection;
+    }
+   
+
+    $connection=connect();
+    $userid=mysql_real_escape_string($_SESSION['username']);
+    
+    $sql="Select project_id,status,p_title from project WHERE owner_id='$userid'";
+    
+    $result=$connection->query($sql);
+    
+    
+    ?>
+
+
+
 
 <div class="container">
             <a class="brand" style="display: flex; justify-content: center; margin-top:10px;" href="index.html">
@@ -77,12 +111,25 @@
             <th>status</th>
             <th>Rating</th>
         </tr>
-
+<?php while($row=$result->fetch_assoc())
+{ ?>
+        
+        <?php 
+        $pid=$row['project_id'];
+        $sql2="Select rating from rating where r_user_id='$userid' AND r_project_id='$pid'";
+        $result2=$connection->query($sql2);
+        
+        
+        ?>
+        
         <tr>
-            <td>id #</td> <!--project id-->
-            <td>name</td> <!--project name-->
-            <td>completed?</td> <!--project status-->
+            <td><?php echo $row['project_id']?></td> <!--project id-->
+            <td><?php echo $row['p_title']?></td> <!--project name-->
+            <td><?php echo $row['status']?></td><!--project status-->
             <td>
+            <?php if($row['status']==='complete' && $result2->num_rows==0 )
+            { ?>
+            
                 <select class="form-control" name="projectrating">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -90,14 +137,33 @@
                     <option value="4">4</option>
                     <option value="5">5</option>
                 </select>
-            </td>
-        </tr>
-
-        <tr>
+              
+            <?php } ?> 
+                
+                <?php if($row['status']==='complete' && $result2->num_rows > 0 )
+            { 
+                echo "You have already rated this Project!";
+              } ?>
+           
+            <?php
+            if($row['status']!=='complete') { ?>
+               <?php echo "Ratings only for complete projects" ?>
+                
+                
+                
+                
+                
+           <?php } ?>
+                  </td>
+            <?php } ?>
             
-        </tr>
+        
+
+ 
 
     </table>
+    
+    <button class="btn btn-success"> Rate! </button>
 
 </div>
 
