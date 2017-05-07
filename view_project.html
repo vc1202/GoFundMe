@@ -1,36 +1,5 @@
-<?php
-session_start();
-if(!isset($_SESSION['username']))
-{
-    Echo "Unauthorised Page Usage Please Relogin to Access All the Page features;";
-    header('location:login.html');
-    
-    
-}
-
-function connect()
-{
-    
-     $servername = "localhost";
-     $usernam = "root";
-     $password = "";
-     $dbname = "project";
-     $connection = new mysqli($servername,$usernam,$password,$dbname);
-     //Check if the connection is established
-if ($connection->connect_error) {
-    die("Connection failed: " . $connection->connect_error);
-} 
-
-return $connection;
-    
-    
-    
-    
-}
-?>
-
+<!DOCTYPE html>
 <html lang="en">
-    
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,144 +9,6 @@ return $connection;
   <link rel="stylesheet" href="css/styles.css">
   <title>GetFunded</title>
 </head>
-<?php
-     $connection=connect();
-     $httpStatusCode = 400;
-     $httpStatusMsg  = 'Username Already taken';
-     $protocol=isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
-
-$projectid=mysql_real_escape_string($_GET['id']);
-
-$sql="Select *,timestampdiff(DAY, pledge_start_date, pledge_end_date) as days from project  where project_id='$projectid'";
-$result=$connection->query($sql);
-if($result->num_rows == 0)
-{
-echo "Error While getting the project";
-
-}
-$row=$result->fetch_assoc();
-
-
-$sql1="Select count(*) as counter from sponsor where project_id='$projectid'";
-$result1=$connection->query($sql1);
-if($result1->num_rows == 0)
-{
-echo "Error While getting the project";
-die();
-}
-$row1=$result1->fetch_assoc();
-
-$sqlcomment="Select discuss_user_id,comment,commend_date FROM discuss WHERE discuss_project_id='$projectid'";
-$resultcomment=$connection->query($sqlcomment);
-
-
-
-?>
-
-<script>
-    
-    function test()
-    {   
-          var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function() {
-        if (this.readyState === 4) {
-            if(this.status===404){
-                alert(this.responseText);
-                                             }
-            if(this.status===200)
-            {
-            
-            alert("Project backed successfully");
-            window.location.reload(true);
-            
-
-            
-                    }
-         
-            }
-  };    
-        xhttp.open("POST", "sponsor.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var param= "sponsorid"+"="+ <?php echo json_encode($_SESSION['username']); ?>+"&"+"pledgevalue"+"="+document.getElementById("pledge").value+"&"+"projectid"+"="+<?php echo json_encode($projectid);?>;
-        xhttp.send(param);
-        
-        } 
-        
-</script>
-
-
-<script>
-    function like1()
-    {
-    <?php
-    $connection1=connect();
-    $username=$_SESSION['username'];
-    $sql2 = "INSERT INTO `like` (like_project_id,like_user_id,like_date) VALUES ('$projectid','$username',NOW())";
-    if($connection1->query($sql2) === TRUE)
-    {
-        $result='1';
-       }
- else {
- $result='0';         
- $error=mysqli_error($connection1);
- 
- 
- }
-    
-?>    
-        
-        
-        
-        if(<?php echo json_encode($result);?> ==='1')
-        {
-            alert("Project followed Sucessfully");
-        }
-        else
-        {
-            alert("There was Some error while following project,Please Try Again");
-            
-        }
-        
-        
-        
-        }
-        
- function commentadd()
- {    
-      var xhttp = new XMLHttpRequest();
-         xhttp.onreadystatechange = function() {
-    if (this.readyState ===4) {
-        if(this.status===400){
-        alert(this.responseText);
-    }
-        if(this.status==200)
-        {
-            
-            alert("Comment added Successfully");
-            window.location.reload(true);
-
-            
-        }
-        
-            
-            }
-  };    
-        xhttp.open("POST", "discuss.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        var param= "projectid"+"="+ <?php echo json_encode($projectid); ?>+"&"+"discussid"+"="+<?php echo json_encode($username);?>+"&"+"commenttext"+"="+document.getElementById("comment").value;
-        //var param= "username"+"="+document.getElementById("username").value+"&"+"password"+"="+document.getElementById("password").value+"&"+"FirstName"+"="+document.getElementById("fname").value+"&"+"LastName"+"="+document.getElementById("lname").value;
-        xhttp.send(param);
-        
-        } 
-     
-    
-     
- 
-    
-    
-    
-  
- </script>
 
 <body>
 
@@ -238,8 +69,7 @@ $resultcomment=$connection->query($sqlcomment);
 <div class="container">
     
     <h2 id="top">Project title </h2>
-    <h3>Project description</h3><br>
-    <h2><?php echo $row['p_description'];?>
+    <h3>Project description</h3>
     <div class="row">
         <div class="col-sm-8 mr-auto">
             <div class="row">
@@ -253,20 +83,21 @@ $resultcomment=$connection->query($sqlcomment);
         </div> <!-- col-8 -->
 
         <div class="col-3 form-group">
-            <h3>By User: <?php echo $row['owner_id'] ;?> </h3><hr>
-            <p><?php echo $row['amt_collected'] ."  "."pledged out of"."  ";?><?php echo $row['max_amt'];?></p>
+            <h2>By User: Varun </h2><hr>
+            <p>$100 pledged out of $1000</p>
             
-            <p> <?php echo $row1['counter']." "."Backers for this project";?></p>
-            <p> <?php echo $row['days'] ." "."days to go";?></p>
-            <button class="btn-info" onclick="like1()">Like</button><br><br>
-            
+            <p> ### backers</p>
+            <p> n days to go</p>
+            <button class="btn-info">Like</button><br><br>
+            <form name="backproject" method="post">
                 
                 <div class="input-group">
                     <span class="input-group-addon">$</span>
-                    <input id="pledge" name="minamt" class="form-control" value=10 min=10 type="number" placeholder="min 10$"/>
-                <button class="btn btn-success" onclick="test()">Pledge?</button>
+                    <input name="minamt" class="form-control" value=10 min=10 type="number" placeholder="min 10$"/>
+                
+                    <button class="btn btn-success">Pledge?</button>
                 </div>
-            
+            </form>
             
         </div><!-- col-4 -->
     </div> <!-- row -->
@@ -294,7 +125,7 @@ $resultcomment=$connection->query($sqlcomment);
             <h2 >About</h2>
             <p> Full description:</p>
             <p>
-               <?php echo $row['p_description']; ?>
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </p>
         </div>
 
@@ -311,29 +142,15 @@ $resultcomment=$connection->query($sqlcomment);
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </p>
         </div>
-        
-        
-   
 
         <hr>
         <div id="cmt" class="form-group">
-            <h2 >Comments</h2> <br><br>
-            <?php
-            while($row=$resultcomment->fetch_assoc())
-            { ?>
-            <h6>><i>User <?php echo $row['discuss_user_id']?>  Commented: "<?php echo $row['comment']?>"  on <?php echo $row['commend_date']?></i></h6><br>
-              
-            
-            <?php 
-            
-            }
-            ?>
-            
-            <form class="form-group"  >
+            <h2 >Comments</h2>
+            <form class="form-group" method="POST" >
                 <div class="form-group">
                     <label for="comment">Comment:</label>
                     <textarea class="form-control" rows="5" id="comment"></textarea>
-                    <input type="button" class="btn btn-success" name="comment" value="comment" onclick="commentadd()">
+                    <input type="submit" class="btn btn-success" name="comment" value="comment">
                 </div>
                 
             </form>
@@ -364,4 +181,3 @@ $resultcomment=$connection->query($sqlcomment);
 <script src="js/scripts.js"></script>
 </body>
 </html>
-?>

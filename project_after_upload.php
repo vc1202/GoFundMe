@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
 {
@@ -29,9 +30,15 @@ if ($connection->connect_error) {
 $target_dir = "uploads/";
 $name=mysql_real_escape_string($_FILES['projectimage']['name']);
 $target_file = $target_dir . basename($name);
+
+
+echo "line 3<br>";
+$target_dir = "uploads/";
+$target_file = $target_dir . basename($_FILES['projectimage']['name']);
+
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-// Check if image file is a actual image or fake image
+//Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
     echo "line 10<br>";
     $check = getimagesize($_FILES["projectimage"]["tmp_name"]);
@@ -44,12 +51,12 @@ if(isset($_POST["submit"])) {
     }
 
 
-    // Check if file already exists
+    //Check if file already exists
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
-    // Check file size
+   // Check file size
     if ($_FILES["projectimage"]["size"] > 500000) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
@@ -74,6 +81,7 @@ if(isset($_POST["submit"])) {
     }
     }
 }
+
 $projectname=mysql_real_escape_string($_POST['project_title']);
 $projectdescription=mysql_real_escape_string($_POST['description']);
 $pledgedate=mysql_real_escape_string($_POST['enddate']);
@@ -102,4 +110,5 @@ else
     echo "Project was not added succesfully";
     
 }
+
 ?>

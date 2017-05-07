@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 session_start();
 if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
@@ -9,6 +10,10 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
 
     ?>
     
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

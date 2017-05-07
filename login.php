@@ -23,6 +23,8 @@ $result1 = $connection->query($sql);
 $row = $result1->fetch_assoc();
 
 if(password_verify($pass,$row['password'])) 
+
+if(password_verify($pass, $row['password'])) 
 {   
     $_SESSION['username']=$username;
     $httpStatusCode1 = 200;
