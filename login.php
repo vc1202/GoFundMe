@@ -22,8 +22,6 @@ $sql="Select password from User where user_id='$username'";
 $result1 = $connection->query($sql);
 $row = $result1->fetch_assoc();
 
-if(password_verify($pass,$row['password'])) 
-
 if(password_verify($pass, $row['password'])) 
 {   
     $_SESSION['username']=$username;
