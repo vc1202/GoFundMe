@@ -18,7 +18,7 @@ $username=mysql_real_escape_string($_POST['username']);
 $pass=mysql_real_escape_string($_POST['password']);
 $password1=password_hash($pass,PASSWORD_BCRYPT);
 
-$sql="Select password from User where user_id='$username'";
+$sql="Select password from user where user_id='$username'";
 $result1 = $connection->query($sql);
 $row = $result1->fetch_assoc();
 

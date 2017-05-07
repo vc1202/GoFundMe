@@ -121,10 +121,10 @@ $resultcomment=$connection->query($sqlcomment);
  $result='0';         
  $error=mysqli_error($connection1);
  
- 
+
  }
-    
-?>    
+   ?>   
+   
         
         
         
@@ -180,6 +180,37 @@ $resultcomment=$connection->query($sqlcomment);
  </script>
 
 <body>
+
+<style>
+.thumbnail {
+    padding:0px;
+}
+.panel {
+	position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+.panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}
+</style>
 
 <div class="container">
             <a class="brand" style="display: flex; justify-content: center; margin-top:10px;" href="#">
@@ -244,7 +275,7 @@ $resultcomment=$connection->query($sqlcomment);
         <div class="col-sm-8 mr-auto">
             <div class="row">
                 
-                <img class="col-12" style="height:90%;" src = "images/red.jpg" >
+                <img class="col-12" style="height:60%;" src = "images/red.jpg" >
 
             </div> <!-- inner row -->
             <br>
@@ -254,7 +285,7 @@ $resultcomment=$connection->query($sqlcomment);
 
         <div class="col-3 form-group">
             <h3>By User: <a href="view_profile.php?id=<?php echo $row['owner_id']?>"><?php echo $row['owner_id'] ;?> </a></h3><hr>
-            <p><?php echo $row['amt_collected'] ."  "."pledged out of"."  ";?><?php echo $row['max_amt'];?></p>
+            <p><?php echo "$".$row['amt_collected'] ."  "."pledged out of"."  $";?><?php echo $row['max_amt'];?></p>
             
             <p> <?php echo $row1['counter']." "."Backers for this project";?></p>
             <p> <?php echo $row['days'] ." "."days to go";?></p>
@@ -274,7 +305,7 @@ $resultcomment=$connection->query($sqlcomment);
 
 
     <nav class="navbar sticky-top navbar-light bg-faded navbar-toggleable-sm" style="display: flex;
-    justify-content:center;">
+    justify-content:center; margin-bottom:10px;">
     
             <div class="nav navbar-nav ">
                 <a class="nav-item nav-link active" href="#about">About</a>
@@ -317,13 +348,21 @@ $resultcomment=$connection->query($sqlcomment);
 
         <hr>
         <div id="cmt" class="form-group">
-            <h2 >Comments</h2> <br><br>
+            <h2 >Comments</h2> 
             <?php
             while($row=$resultcomment->fetch_assoc())
-            { ?>
-            <h6>><i>User <?php echo $row['discuss_user_id']?>  Commented: "<?php echo $row['comment']?>"  on <?php echo $row['commend_date']?></i></h6><br>
-              
+            { 
+                $datenow = new DateTime("now");
+                $datecmt = new DateTime($row['commend_date']);
+                $interval = date_diff($datecmt, $datenow);
             
+            ?>
+            <div class="container">
+                <div class="panel panel-default">
+                    <strong>><?php echo $row['discuss_user_id']?> </strong> <div class="panel-body"><?php echo $row['comment']?></div><!-- /panel-body -->  <span class="text-muted"><?php echo $interval->d?> days ago</span><br><br>
+              
+                </div>
+            </div>
             <?php 
             
             }

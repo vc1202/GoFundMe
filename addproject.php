@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 session_start();
 if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
@@ -55,7 +55,35 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
             </div> <!-- navbar -->  
             
             <div class="nav navbar-nav mr-2"> 
-                <form action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
+                <form class="nav-item form-inline">
+                    <input class="form-control" placeholder="Search">
+                        <button class="btn btn-info ">
+                            <img src="images/698956-icon-111-search-128.png" style="width:16px">
+                        </button>
+                </form>
+
+                <div class="dropdown">
+                    <a class= "nav-item nav-link dropdown-toggle" data-toggle="dropdown" href="#">Account</a> 
+                    
+                    <div class="dropdown-menu-right dropdown-menu" >
+                        
+                            <a class="dropdown-item" href="#">Update profile</a>
+                            <a class="dropdown-item" href="#">Project stats</a>
+                            <a class="dropdown-item" href="#">Project pledged</a>
+                            <a class="dropdown-item" href="#">Log out</a>
+
+                    </div>
+                </div> <!--dropdown-->
+
+            </div>
+        </div> <!-- collapse -->
+
+        
+    </nav>
+            
+<div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:60%; background-color:aqua;">
+            
+        <form id="addproject" action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
 
         <fieldset class="form-group">
             <div class="form-group">
@@ -74,7 +102,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="form-group">
                 <label class="form-group" for="description">Project description: </label><br>
-                <textarea rows="4" cols="50" name="description" form="addproject" required>
+                <textarea rows="4" cols="50" name="description" id="desc" form="addproject" required/>
                 </textarea>
                  
             </div>

@@ -33,7 +33,7 @@ $target_file = $target_dir . basename($name);
 
 
 echo "line 3<br>";
-$target_dir = "uploads/";
+$target_dir = "uploads/images/";
 $target_file = $target_dir . basename($_FILES['projectimage']['name']);
 
 $uploadOk = 1;
@@ -62,7 +62,7 @@ if(isset($_POST["submit"])) {
         $uploadOk = 0;
     }
     // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+    if($imageFileType != "jpg" && $imageFileType != "JPG" && $imageFileType != "png" && $imageFileType != "jpeg"
     && $imageFileType != "gif" ) {
         echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
         $uploadOk = 0;
@@ -76,14 +76,17 @@ if(isset($_POST["submit"])) {
 
          if (move_uploaded_file($_FILES['projectimage']['tmp_name'], $target_file)) {
         echo "The file ". basename( $_FILES["projectimage"]["name"]). " has been uploaded.";
+        
+
+
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
     }
 }
-
+echo htmlspecialchars($_POST['description']);
 $projectname=mysql_real_escape_string($_POST['project_title']);
-$projectdescription=mysql_real_escape_string($_POST['description']);
+$projectdescription=htmlspecialchars($_POST['description']);
 $pledgedate=mysql_real_escape_string($_POST['enddate']);
 $minamount=mysql_real_escape_string($_POST['minamt']);
 $maxamount=mysql_real_escape_string($_POST['maxamt']);
@@ -96,18 +99,34 @@ if(!checkmydate($pledgedate) && !checkmydate($enddate))
     header("Location: addproject.php");
     }
 $ownerid=mysql_real_escape_string($_SESSION['username']);
-$sql="INSERT INTO  project (project_id, owner_id,status,p_title,p_description,p_tags,p_category,min_amt,max_amt,imagename,amt_collected,pledge_start_date,pledge_end_date,proj_end_date) VALUES (10,'$ownerid','looking','$projectname', '$projectdescription','Inserttest','Science','$minamount','$maxamount','$target_file',0,NOW(),'$pledgedate','$enddate')";
+
+
+    $cnt = "SELECT * FROM project";
+    $res = $connection->query($cnt);
+
+    $row_cnt = mysqli_num_rows($res) + 1;
+
+$sql="INSERT INTO  project (project_id, owner_id,status,p_title,p_description,p_tags,p_category,min_amt,max_amt,amt_collected,pledge_start_date,pledge_end_date,proj_end_date) VALUES ('$row_cnt','$ownerid','looking','$projectname', '$projectdescription','Inserttest','Science','$minamount','$maxamount',0,NOW(),'$pledgedate','$enddate')";
 
 if($connection->query($sql) === TRUE)
 {
     echo "Successfully Added Project";
+
+
+    $upload="INSERT INTO project_cover_image(pci_project_id, file_path, file_type) VALUES('$row_cnt', '$target_file', '$imageFileType')";
+        if($connection->query($upload) === TRUE){
+            echo "Image uploaded to Project";
+        }
+        else{  
+            echo "Image was not updated! ".$connection->error; 
+        }
     
     
 }
 else
 {
     
-    echo "Project was not added succesfully";
+    echo "Project was not added succesfully ".$connection->error;
     
 }
 
