@@ -54,7 +54,7 @@
 </div> <!-- content container --> 
 
 <div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:400px; background-color:aqua;">
-    <form name="signup" method="POST"> 
+    <form   method="post" action="Signup.php"> 
 
         <fieldset class="form-group">
             <div class="form-group">
@@ -65,14 +65,14 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input id="fname" name="fname" class="form-control" type="text" placeholder="First name"/>
+                <input id="firstname" name="firstname" class="form-control" type="text" placeholder="First name"/>
                  
             </div>
         </fieldset>
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input id="lname" name="lname" class="form-control" type="text" placeholder="Last name"/>
+                <input id="lastname" name="lastname" class="form-control" type="text" placeholder="Last name"/>
                  
             </div>
         </fieldset>
@@ -104,7 +104,7 @@
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input class="btn btn-success btn-block" name="submitSignUp" class="form-control" type="submit" value="Register">
+                <input class="btn btn-success btn-block" name="submitSignUp" type="submit" value="Register">
                  
             </div>
         </fieldset>

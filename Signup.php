@@ -1,58 +1,58 @@
-//Php script to process user's Signup Request
-
 <?php
 session_start();
 error_reporting(0);
 $servername = "localhost";
-$username = "root";
+$usernam = "root";
 $password = "";
-$dbname = "test";
+$dbname = "project";
+$httpStatusCode = 400;
+$httpStatusMsg  = 'Username Already taken';
+$protocol=isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0';
 
-
-
-$connection = new mysqli($servername,$username,$password,$dbname);
+$connection = new mysqli($servername,$usernam,$password,$dbname);
 //Check if the connection is established
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 } 
 
-$username = mysql_real_escape_string($_POST['username']);  //Escape any Special Characters for Usage in Query(Security)
-
-$result1 = $connection->query("SELECT cname FROM customer WHERE cname = '$username'");
+$username1 = mysql_real_escape_string($_POST['username']);//Escape any Special Characters for Usage in Query(Security)
+$result1 = $connection->query("SELECT * FROM $dbname.User WHERE user_id = '$username1'");
 if($result1->num_rows > 0) {
   //Error Message to be sent to Ajax Query Response.
     //die();
-    array('type' => 'error', 'message' => 'Username Already Exists Please Try with Different Username');
-        header('HTTP/1.1 400 Bad Request');
-        header('Content-Type: application/json; charset=UTF-8');
-        echo json_encode($data);
-    
-    
-    $conn->close();
-
-    
-    }
+     header($protocol.' '.$httpStatusCode.' '.$httpStatusMsg);
+     return false;
+    $connection->close();
+}
 else
 
-{   $pass=mysql_real_escape_string($_POST['password']);
-    $password = password_hash($pass,PASSWORD_DEFAULT);
+{
+    
+    $pass=mysql_real_escape_string($_POST['password']);
+    $password1 = password_hash($pass,PASSWORD_BCRYPT);
     $firstName=mysql_real_escape_string($_POST['FirstName']);
     $LastName=mysql_real_escape_string($_POST['LastName']);
-    $sql = "INSERT INTO Users(Username, FirstName, LastName,Password)
-    VALUES ($usermame,$firstName,$LastName ,$password)";
+    
+    $sql = "INSERT INTO User (user_id, f_name, l_name,password,address,dob) VALUES ('$username1', '$firstName', '$LastName','$password1','123',CURDATE())";
+    
     if ($connection->query($sql) === TRUE) {
-    
-} 
+        $Success=505;
+        $httpStatusMsg='Added';
+        $_SESSION['username']=$username1;
+        header($protocol.' '.$Success.' '.$httpStatusMsg);
+        
+        
+ } 
 
-else {
+    else {
     
 
-    
-    
-    
-}
+    $Success=404;
+    $httpStatusMsg='Some error While Inserting the records'; 
+    header($protocol.' '.$Success.' '.$httpStatusMsg);
+    }
 
-$conn->close();
+$connection->close();
 
  }
  
