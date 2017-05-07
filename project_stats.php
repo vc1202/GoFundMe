@@ -68,7 +68,7 @@
 <div class="container">
 
     <br>
-    <h2 style="display:flex; justify-content:center;" class="text-muted">List of projects pledged</h2>
+    <h2 style="display:flex; justify-content:center;" class="text-muted">Project statistics</h2>
 
     <table class="table table-hover">
         <tr class="text-danger">
@@ -81,16 +81,8 @@
         <tr>
             <td>id #</td> <!--project id-->
             <td>name</td> <!--project name-->
-            <td>completed?</td> <!--project status-->
-            <td>
-                <select class="form-control" name="projectrating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
+            <td class="text-success">completed?</td> <!--project status-->
+            <td>avg rating it got</td>
         </tr>
 
         <tr>

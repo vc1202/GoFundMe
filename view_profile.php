@@ -68,36 +68,31 @@
 <div class="container">
 
     <br>
-    <h2 style="display:flex; justify-content:center;" class="text-muted">List of projects pledged</h2>
+    <div class="row">
+        <div class="col-2">
+            <h3>User name</h3>
+            <button class="btn-info">Follow</button><br><br>
+            <button class="btn-info">Un-follow</button><br>
+        </div>
 
-    <table class="table table-hover">
-        <tr class="text-danger">
-            <th>Project id</th>
-            <th>Project name</th>
-            <th>status</th>
-            <th>Rating</th>
-        </tr>
+        <div class="col-8">
+            <div class="row">
+                <div class="col">
+                    <h4>Projects by this user:</h4>
+                    <h6><a href="#">Project# backed</a></h6>
+                </div>
+            </div>
+            <br><br>
 
-        <tr>
-            <td>id #</td> <!--project id-->
-            <td>name</td> <!--project name-->
-            <td>completed?</td> <!--project status-->
-            <td>
-                <select class="form-control" name="projectrating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </td>
-        </tr>
+            <div class="row">
+                <div class="col">
+                    <h4>Projects pledged this user:</h4>
+                    <h6><a href="#">Project# pledged</a></h6>
+                </div>
+            </div>
 
-        <tr>
-            
-        </tr>
-
-    </table>
+        </div>
+    </div>
 
 </div>
 
