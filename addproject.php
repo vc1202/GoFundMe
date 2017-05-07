@@ -55,34 +55,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
             </div> <!-- navbar -->  
             
             <div class="nav navbar-nav mr-2"> 
-                <form class="nav-item form-inline">
-                    <input class="form-control" placeholder="Search">
-                        <button class="btn btn-info ">
-                            <img src="images/698956-icon-111-search-128.png" style="width:16px">
-                        </button>
-                </form>
-
-                <div class="dropdown">
-                    <a class= "nav-item nav-link dropdown-toggle" data-toggle="dropdown" href="#">Account</a> 
-                    
-                    <div class="dropdown-menu-right dropdown-menu" >
-                        
-                            <a class="dropdown-item" href="#">Update profile</a>
-                            <a class="dropdown-item" href="#">Project stats</a>
-                            <a class="dropdown-item" href="#">Project pledged</a>
-                            <a class="dropdown-item" href="#">Log out</a>
-
-                    </div>
-                </div> <!--dropdown-->
-
-            </div>
-        </div> <!-- collapse -->
-
-        
-    </nav>
-
-<div class="container"  style="display:flex; position:relative; justify-content:center; margin-top:20px; height:100%; width:60%; background-color:aqua;">
-    <form action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
+                <form action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
 
         <fieldset class="form-group">
             <div class="form-group">
@@ -93,7 +66,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
 
         <fieldset class="form-group">
             <div class="form-group">
-                <input name="project_title" class="form-control" type="text" placeholder="Project Title"/>
+                <input name="project_title" class="form-control" type="text" placeholder="Project Title" required/>
                  
             </div>
         </fieldset>
@@ -101,16 +74,45 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="form-group">
                 <label class="form-group" for="description">Project description: </label><br>
-                <textarea rows="4" cols="50" name="description" form="addproject">
+                <textarea rows="4" cols="50" name="description" form="addproject" required>
                 </textarea>
                  
             </div>
         </fieldset>
 
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label class="form-group" for="category">Category: </label><br>
+                <select class="form-control" name="category">
+                    <option value="Tech">Tech</option>
+                    <option value="Art">Art</option>
+                    <option value="Music">Music</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Food">Food</option>
+                </select>
+            </div>
+        </fieldset>
+
+
+        <fieldset class="form-group">
+            <div class="form-group">
+                <label class="form-group" for="category">Tags: </label><br>
+                <select class="form-control" name="tags">
+                    <option value="jazz">Jazz</option>
+                    <option value="keybaord">Keyboard</option>
+                    <option value="rock">Rock</option>
+                    <option value="cars">Cars</option>
+                    <option value="hip-hop">Hip-hop</option>
+                </select>
+            </div>
+        </fieldset>
+
+
         <fieldset class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input name="minamt" class="form-control" min=10 type="number" placeholder="minimum amount"/>
+                <input name="minamt" class="form-control" min=10 type="number" placeholder="minimum amount" required/>
                  
             </div>
         </fieldset>
@@ -118,7 +120,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">$</span>
-                <input name="maxamt" class="form-control" min=10 type="number" placeholder="maximum amount"/>
+                <input name="maxamt" class="form-control" min=10 type="number" placeholder="maximum amount" required/>
                  
             </div>
         </fieldset>
@@ -126,7 +128,12 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="form-group">
                 <label class="form-group" for="enddate"> Pledge end date: </label>
-                <input name="enddate" class="form-control" type="datetime-local" placeholder="End of pledge"/>
+                <input name="enddate" class="form-control" type="date" placeholder="End of pledge" required/><br>
+                <label class="form-group" for="enddate"> Pledge end time: </label>
+
+                <input name="pledgehour"  min=00 max=23 type="number" placeholder="hh" required/>
+
+                <input name="pledgeminnute"  min=00 max=59 type="number" placeholder="mm" required/>
                  
             </div>
         </fieldset>
@@ -134,7 +141,12 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="form-group">
                 <label class="form-group" for="projcompletion"> Project completion: </label>
-                <input name="projcompletion" class="form-control" type="datetime-local" placeholder="project completion"/>
+                <input name="projcompletion" class="form-control" type="date" placeholder="project completion" required/><br>
+
+                <label class="form-group" for="enddate"> Pledge completion time: </label>
+                <input name="completionhour"  min=00 max=23 type="number" placeholder="hh" required/>
+
+                <input name="completionminnute"  min=00 max=59 type="number" placeholder="mm" required/>
                  
             </div>
         </fieldset>
