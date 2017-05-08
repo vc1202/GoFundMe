@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 session_start();
 if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
@@ -37,7 +36,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
 </div> <!--container-->
 
 
-    <nav class="navbar navbar-inverse bg-primary navbar-toggleable-sm">
+     <nav class="navbar navbar-inverse bg-primary navbar-toggleable-sm">
     
             
             
@@ -55,7 +54,35 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
             </div> <!-- navbar -->  
             
             <div class="nav navbar-nav mr-2"> 
-                <form action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
+                <form method="post" action="searchprojects.php" class="nav-item form-inline">
+                    <input type="text" name="user-search" id="user-search" class="form-control" placeholder="Search">
+                        <button type = "submit" class="btn btn-info ">
+                            <img src="images/698956-icon-111-search-128.png" style="width:16px">
+                        </button>
+                </form>
+
+                <div class="dropdown">
+                    <a class= "nav-item nav-link dropdown-toggle" data-toggle="dropdown" href="#">Account</a> 
+                    
+                    <div class="dropdown-menu-right dropdown-menu" >
+                        
+                            <a class="dropdown-item" href="#">Update profile</a>
+                            <a class="dropdown-item" href="#">Project stats</a>
+                            <a class="dropdown-item" href="#">Project pledged</a>
+                            <a class="dropdown-item" href="#">Log out</a>
+
+                    </div>
+                </div> <!--dropdown-->
+
+            </div>
+        </div> <!-- collapse -->
+
+        
+    </nav>
+
+<div class="container" style="display:flex; justify-content:center; width:500px; margin-top:20px; background-color:ghostwhite;">
+        <form action = "project_after_upload.php" enctype="multipart/form-data" method="POST"> 
+        
 
         <fieldset class="form-group">
             <div class="form-group">
