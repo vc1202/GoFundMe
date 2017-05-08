@@ -38,14 +38,56 @@ return $connection;
     $connection=connect();
     $userid=mysql_real_escape_string($_SESSION['username']);
     
-    $sql="Select project_id,status,p_title from project WHERE owner_id='$userid'";
+    $sql="Select project.project_id,project.status,project.p_title from project  join (Select distinct project_id,spon_id from sponsor WHERE spon_id='$userid')V where project.project_id=V.project_id";
     
     $result=$connection->query($sql);
     
     
     ?>
 
-
+<script>
+    
+    function rating(a)
+    {   alert("running");
+        var xhttp = new XMLHttpRequest();
+         xhttp.onreadystatechange = function() {
+    if (this.readyState === 4) {
+        if(this.status===400){
+        alert("There was a problem while giving the rating");
+    }
+        if(this.status===200)
+        {
+            
+            alert("Rating given succesfully");
+            location.reload(true);
+           }
+            
+            }
+  };   
+  
+         if( parseInt(a.value)==0)
+         {
+             alert("Rating should be greater than 1")
+             
+         }
+             
+        xhttp.open("POST", "rating.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        var param1=((a.parentElement).parentElement.childNodes[1].innerHTML);
+       
+        var param="rating"+"="+a.value+"&"+"projectid"+"="+param1;
+        console.log(param);
+        xhttp.send(param);
+        
+        } 
+        
+        
+        
+        
+    
+    
+    
+</script>
 
 
 <div class="container">
@@ -130,19 +172,21 @@ return $connection;
             <?php if($row['status']==='complete' && $result2->num_rows==0 )
             { ?>
             
-                <select class="form-control" name="projectrating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
+                <select id="rating select" onchange="rating(this)" class="form-control" name="projectrating">
+                    <option selected>0</option>
+                    <option  value="1" >1</option>
+                    <option  value="2">2</option>
+                    <option  value="3">3</option>
+                    <option  value="4">4</option>
+                    <option  value="5">5</option>
                 </select>
               
             <?php } ?> 
                 
                 <?php if($row['status']==='complete' && $result2->num_rows > 0 )
-            { 
-                echo "You have already rated this Project!";
+            {   $row2=$result2->fetch_assoc();
+                $rating=$row2['rating'];
+                echo "You have already rated this Project!,You have given the project a rating of $rating";
               } ?>
            
             <?php
@@ -163,7 +207,7 @@ return $connection;
 
     </table>
     
-    <button class="btn btn-success"> Rate! </button>
+    <button class="btn btn-success" onclick=""> Rate! </button>
 
 </div>
 
