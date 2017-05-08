@@ -53,6 +53,7 @@ $result=$connection->query($sql);
 if($result->num_rows == 0)
 {
 echo "Error While getting the project";
+die();
 
 }
 $row=$result->fetch_assoc();
