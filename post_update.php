@@ -19,13 +19,31 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 } 
 
+
+
+
 $projecttextupdate = mysql_real_escape_string($_POST['textupdate']);
-echo $projecttextupdate. "<br> ";
 
-echo $_FILES["updatevideo"]["name"];
+$projecttextupdate = mysql_real_escape_string($_POST['textupdate']);
 
-$allowedExts = array("ogg", "mp4", "webm", "MP4");
-$extension = pathinfo($_FILES["updatevideo"]["name"], PATHINFO_EXTENSION);
+if($projecttextupdate)
+{
+    $sql="INSERT INTO blob_data(`project_id`,`data_type`,`data_path`,`date`) VALUES(1,'text','$projecttextupdate',NOW())";
+    $connection->query($sql);
+    if($connection)
+    {
+        echo "Inserted Text update";
+        
+    }
+    
+}
+
+
+
+if(filesize($_FILES["updatevideo"]["tmp_name"])){
+
+  $allowedExts = array("ogg", "mp4", "webm", "MP4");
+ $extension = pathinfo($_FILES["updatevideo"]["name"], PATHINFO_EXTENSION);
 
 if ((($_FILES["updatevideo"]["type"] == "video/mp4")
 || ($_FILES["updatevideo"]["type"] == "video/ogg")
@@ -55,11 +73,15 @@ if ((($_FILES["updatevideo"]["type"] == "video/mp4")
       "uploads/videos/" . $_FILES["updatevideo"]["name"]);
       $target_file = "uploads/videos/" . $_FILES["updatevideo"]["name"];
       echo "Stored in: " . "uploads/videos/" . $_FILES["updatevideo"]["name"];
+      $target_file=mysql_real_escape_string($target_file);
+      $sql2="INSERT INTO blob_data(`project_id`,`data_type`,`data_path`,`date`) VALUES(1,'video','$target_file',NOW())";
+      $connection->query($sql2);
       }
     }
   }
 else
   {
   echo "Invalid file";
+  }
   }
 ?>
