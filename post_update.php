@@ -18,6 +18,22 @@ $connection = new mysqli($servername,$usernam,$password,$dbname);
 if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 } 
+
+$project_ID=mysql_escape_string($_GET['projectid']);
+$ownerid=mysql_real_escape_string($_SESSION['username'])
+$sqlcheck="SELECT * FROM project where project_id='$project_ID' and owner_id='$ownerid'";
+$result1=$connection->query($sqlcheck);
+if($result1->num_rows <=0)
+{
+
+echo "Unauthorised Project Update";
+
+
+}
+
+
+
+
 $projecttextupdate = mysql_real_escape_string($_POST['textupdate']);
 
 
@@ -31,8 +47,8 @@ if($projecttextupdate)
     {
         
     
+    }
 }
-
 
 
 if(filesize($_FILES["updatevideo"]["tmp_name"])){
@@ -77,11 +93,15 @@ if ((($_FILES["updatevideo"]["type"] == "video/mp4")
 else
   {
   
-   $allowedExts = array("jpg", "jpeg", "png", "gif");
-   $extension = pathinfo($_FILES["updatevideo"]["name"], PATHINFO_EXTENSION);
-   if ((($_FILES["updatevideo"]["type"] == "image/jpg")
+   $allowedExts = array("jpg", "jpeg", "gif", "png", "mp3", "mp4", "wma");
+$extension = pathinfo($_FILES['updatevideo']['name'], PATHINFO_EXTENSION);
+
+if ((($_FILES["updatevideo"]["type"] == "video/mp4")
+|| ($_FILES["updatevideo"]["type"] == "audio/mp3")
+|| ($_FILES["updatevideo"]["type"] == "audio/wma")
+|| ($_FILES["updatevideo"]["type"] == "image/pjpeg")
 || ($_FILES["updatevideo"]["type"] == "image/gif")
-|| ($_FILES["updatevideo"]["type"] == "imgae/png"))
+|| ($_FILES["updatevideo"]["type"] == "image/jpeg"))
 
 && in_array($extension, $allowedExts))
 
@@ -110,6 +130,7 @@ else
       $target_file=mysql_real_escape_string($target_file);
       $sql2="INSERT INTO blob_data(`project_id`,`data_type`,`data_path`,`date`) VALUES(1,'image','$target_file',NOW())";
       $connection->query($sql2);
+      header('location:list_project.php')
       }
     }
     
@@ -117,9 +138,8 @@ else
 }
 else
 {
-    echo("Error while uploading While");
-    
-    
+    echo("Error while uploading");
+       
 }
 }
   }
@@ -127,7 +147,6 @@ else
   
   
   
-      }
 
   
   ?>
