@@ -101,7 +101,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
         <fieldset class="form-group">
             <div class="form-group">
                 <label class="form-group" for="description">Project description: </label><br>
-                <textarea rows="4" cols="50" name="description" form="addproject" required>
+                <textarea rows="4" cols="50" name="description"  required>
                 </textarea>
                  
             </div>
@@ -170,7 +170,7 @@ if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
                 <label class="form-group" for="projcompletion"> Project completion: </label>
                 <input name="projcompletion" class="form-control" type="date" placeholder="project completion" required/><br>
 
-                <label class="form-group" for="enddate"> Pledge completion time: </label>
+                <label class="form-group" for="enddate"> Project completion time: </label>
                 <input name="completionhour"  min=00 max=23 type="number" placeholder="hh" required/>
 
                 <input name="completionminnute"  min=00 max=59 type="number" placeholder="mm" required/>
