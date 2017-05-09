@@ -1,3 +1,34 @@
+<?php
+session_start();
+if(!isset($_SESSION['username']))
+{
+    echo "Unauthorised Page Usage Please Relogin to Access All the Page features;";
+    header('location:login.html');
+    die();
+    
+} 
+
+        $servername = "localhost";
+     $usernam = "root";
+     $password = "";
+     $dbname = "project";
+     $connection = new mysqli($servername,$usernam,$password,$dbname);
+     //Check if the connection is established
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+} 
+
+return $connection;
+
+$ownerid=mysql_real_escape_string($_SESSION['username']);
+
+$sql="Select * from projects where ownerid='$ownerid'";
+
+$result=$connection->query($sql);
+    
+    
+   ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -80,8 +111,10 @@
         </tr>
 
         <tr>
-            <td>id #</td> <!--project id-->
-            <td>name</td> <!--project name-->
+            <?php while($row=$result->fetch_assoc()){ ?>
+            <td><a href="post_update.php?projectid=<?php echo $row['project_id']?>"><?php echo row['project_id']?></a></td> <!--project id-->
+            <td><?php echo $row['p_title']?></td> <!--project name-->
+            <td><?php echo $row['status']?></td>
             <td class="text-success">completed?</td> <!--project status-->
         </tr>
 
