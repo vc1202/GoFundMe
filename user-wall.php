@@ -1,4 +1,27 @@
-<?php session_start(); ?>
+<?php session_start(); 
+error_reporting(0);
+$servername = "localhost";
+$usernam = "root";
+$password = "";
+$dbname = "project";
+$connection = new mysqli($servername,$usernam,$password,$dbname);
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
+} 
+$id=mysql_real_escape_string($_SESSION['username']);
+$sql="Select like_user_id,like_project_id FROM `like` join (Select followee from follow where follower='$id')V on like.like_user_id=V.followee and TIMESTAMPDIFF(DAY,like_date,NOW())<20";
+
+if($resultquery=$connection->query($sql)!=true)
+{
+    
+ echo "Error in Sql";   
+    
+}
+
+
+?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -241,9 +264,11 @@
         <div class="col-3 mr-3">
             <h2>Activities: </h2>
             <hr>
-            <p> User #1 followed this project</p>
+            <?php while($row=$resultquery->fetch_assoc()){?>
+            <p> User <?php echo $row['like_user_id']?> Followed Project <?php echo $row['like_project_id']?></p>
         </div><!-- col-4 -->
     </div> <!-- row -->
+            <?php }?>
 </div><!--container-->
 
 

@@ -1,7 +1,8 @@
 <?php
+session_start();
 if(!isset($_SESSION['username']))
 {
-    Echo "Unauthorised Page Usage Please Relogin to Access All the Page features;";
+    echo "Unauthorised Page Usage Please Relogin to Access All the Page features;";
     header('location:login.html');
     
     

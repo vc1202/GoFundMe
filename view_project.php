@@ -53,6 +53,7 @@ $result=$connection->query($sql);
 if($result->num_rows == 0)
 {
 echo "Error While getting the project";
+die();
 
 }
 $row=$result->fetch_assoc();
@@ -300,16 +301,48 @@ $resultcomment=$connection->query($sqlcomment);
 
         <hr>
         <div id="updates">
+            
+            
             <h2 >Updates</h2>
-            <p>Update #1</p>
+            
+            <?php
+            $sql="Select * from blob_data where project_id='$projectid'";
+            $result=$connection->query($sql);
+           ?>
+            
+            <?php while($row=$result->fetch_assoc()){?>
+ 
+            <p>Update <?php echo $row['bd_update_no']?></p><br>
             <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            <?php if(row['data_type']==='text'){
+            
+             echo $row['data'];
+            }
+            if(row['data_type']==='video')
+            {
+               ?>
+              <video width="320" height="240" controls>
+                <source src="<?php echo $row['data']?>" type="video/mp4">
+                    Your browser does not support the video tag.
+                    </video>
+                
+            <?php }?>
+                
+            <?php if($row['data_type']==='image'){
+                ?>
+                <img src="<?php echo $row['data']?>" alt="Smiley face" height="42" width="42">
+                
+            <?php } ?>
+            
+                
+           <?php } ?>
+            
+            
+             
+            
             </p>
 
-            <p>Update #2</p>
-            <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </p>
+            
         </div>
         
         
