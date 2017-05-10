@@ -29,6 +29,8 @@ $tag2="SELECT project_id, p_title, p_description, imagename FROM project order b
 $tagresult=$connection->query($tag);
 
 $tagresult2=$connection->query($tag2);
+$search="Select * from user_recommendation where user_id='$user_id'";
+$result=$connection->query($search);
 
 
 
@@ -270,6 +272,24 @@ $tagresult2=$connection->query($tag2);
             }
             
              ?>
+                <?php while($row=$result->fetch_assoc())
+                {
+                    $key=row['searchkey'];
+                    $newsql="Select * from project where p_description like %$key%";
+                    $resultnew=$connection->query($newsql);
+                    while($row=$resultnew->fetch_assoc()){
+                      echo "<section class=col-sm-6>";
+                    echo '<a class="tabindex" href=view_project.php?id=' . $rowtag['project_id'] . ">";
+                    echo '<img width="100" height="100" src = ' .$rowtag['imagename'] . ' >';
+                    echo "<h4> ". $rowtag['p_title'] . "</h4>";
+                    echo "<p>" . $rowtag['p_description'] ."</p>";
+                    echo "</section></a>";   
+                        
+                        
+                        
+                    }
+                    
+                } ?>
 
                 
 
