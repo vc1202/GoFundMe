@@ -22,8 +22,9 @@ return $connection;
     $projectid=mysql_real_escape_string($_POST['projectid']);
     $rating=mysql_real_escape_string($_POST['rating']);
     
-    $sql="INSERT INTO `rating`(r_user_id,r_project_id,rating,r_date) VALUES ('$userid','$projectid','$rating',NOW() )";
+    $sql="INSERT INTO `rating`(r_user_id,r_project_id,rating,r_date) VALUES ('$userid','$projectid','$rating',NOW())";
     $result=$connection1->query($sql);
+    $result2=$connection1->query($sql2);
    
     if($connection1->query($sql)!=true)
         {
