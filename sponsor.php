@@ -27,10 +27,15 @@ if (!$connection) {
 } 
 
 $sql="INSERT INTO sponsor(spon_id,project_id,spon_amt,spon_date_time) VALUES ('$sponsor','$projectid','$pledge',NOW())";
-
+$sql2="UPDATE project Set amt_collected=amt_collected+$pledge where project_id='$projectid'";
+if(!$connection->query($sql2))
+{
+    echo mysqli_error($connection);
+    
+}
 if ($connection->query($sql) === TRUE) {
         $Success=200;
-        $httpStatusMsg=mysql_error($connection);
+        $httpStatusMsg="Working";
         header($protocol.' '.$Success.' '.$httpStatusMsg);
         
         
@@ -40,7 +45,7 @@ if ($connection->query($sql) === TRUE) {
     
 
     $Success=404;
-    $httpStatusMsg=mysql_error($connection);
+    $httpStatusMsg="Not working";
     header($protocol.' '.$Success.' '.$httpStatusMsg);
     }
 

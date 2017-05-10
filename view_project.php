@@ -88,7 +88,7 @@ $resultcomment=$connection->query($sqlcomment);
             if(this.status===200)
             {
             
-            alert("Project backed successfully");
+            alert(this.responseText);
             window.location.reload(true);
             
 
@@ -100,7 +100,20 @@ $resultcomment=$connection->query($sqlcomment);
         xhttp.open("POST", "sponsor.php", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         var param= "sponsorid"+"="+ <?php echo json_encode($_SESSION['username']); ?>+"&"+"pledgevalue"+"="+document.getElementById("pledge").value+"&"+"projectid"+"="+<?php echo json_encode($projectid);?>;
-        xhttp.send(param);
+        var a=<?php echo json_encode($row['max_amt']); ?>;
+        var b=<?php echo json_encode($row['amt_collected']); ?>;
+        console.log(a);
+        console.log(b);
+        console.log(parseInt(document.getElementById("pledge").value));
+       
+        if(parseInt(a) < parseInt(document.getElementById("pledge").value)+parseInt(b))
+        {
+            alert ("The pledge you have entered  makes project exceed maximum amount it can collect,Please choose a lesser value");
+            return false;
+            
+        }
+    
+    xhttp.send(param);
         
         } 
         
@@ -263,11 +276,16 @@ $resultcomment=$connection->query($sqlcomment);
             
                 
                 <div class="input-group">
+                    
+                    <?php if($row['status']==='complete' || $row['amt_collected']===$row['max_amt']){
+                        echo "Project is either complete or not taking any more pledges";
+                    }
+                    else{?>
                     <span class="input-group-addon">$</span>
                     <input id="pledge" name="minamt" class="form-control" value=10 min=10 type="number" placeholder="min 10$"/>
                 <button class="btn btn-success" onclick="test()">Pledge?</button>
                 </div>
-            
+            <?php } ?>
             
         </div><!-- col-4 -->
     </div> <!-- row -->
