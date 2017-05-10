@@ -1,5 +1,11 @@
 <?php
 session_start();
+if(!(isset($_SESSION['username'])) && empty($_SESSION['username']))
+{
+    echo "UnAuthorised Page Usage, Please Login from Main Page to continue";
+    die();
+    
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
